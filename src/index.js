@@ -98,6 +98,4 @@ restaurantList.addEventListener('click', async(event)=>{
 } 
 )
 
-
-
 init()
