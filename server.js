@@ -165,7 +165,16 @@ app.get('/api/users/:userId/reservations', async(req, res, next)=> {
 
 app.post('/api/users/:userId/reservations', async(req, res, next)=> {
   try {
-    res.status(201).send(await Reservation.create({ userId: req.params.userId, restaurantId: req.body.restaurantId}));
+    const addedReserv = await Reservation.create({
+        userId: req.params.userId, 
+        restaurantId: req.body.restaurantId,  
+      })
+    const added = await Reservation.findAll({
+      where: {userId: req.params.userId},
+      include: {model: Restaurant}
+    })
+    
+    res.status(201).send(added);
   }
   catch(ex){
     next(ex);
