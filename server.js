@@ -153,8 +153,11 @@ app.get('/api/restaurants', async(req, res, next)=> {
 
 app.get('/api/users/:userId/reservations', async(req, res, next)=> {
   try {
-    res.send(await Reservation.findAll({ where: { userId: req.params.userId }}));
-  }
+    res.send(await Reservation.findAll({ 
+      where: { userId: req.params.userId}, 
+      include: { model: Restaurant} 
+     }
+    ))}
   catch(ex){
     next(ex);
   }
